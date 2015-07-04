@@ -44,7 +44,7 @@ void InitIO(void) {
 
     TRISBbits.TRISB6 = 0; //led
     TRISBbits.TRISB15 = 0; //CTS BBB data is ready
-    TRISBbits.TRISB1 = 1; //RTS from BBB
+  //  TRISBbits.TRISB1 = 1; //RTS from BBB, not used
     LATBbits.LATB6 = 0;
     LATBbits.LATB15 = 0;
 
@@ -110,7 +110,8 @@ volatile unsigned long encRight;
 volatile unsigned long encLeft;
 volatile unsigned int shadowBuffPtr = 0;
 volatile unsigned char measurementCount = 0;
-unsigned char a = 0;
+unsigned char pseudo_buffer_id = 0;//unique buffer identifier between 0-255, added
+//to the end of the buffer
 
 void SampleOnce(void) {
     __delay_us(500);
@@ -152,24 +153,19 @@ void loadShadowBuff() {
 
     }
     if (shadowBuffPtr == 123) {//shadow buffer is full, transfer to primary buffer
-        // LATBbits.LATB6=1;
-        //
 
-        // while(bufferPtr!=0);
-        shadowBuff[125] = a++;
+        shadowBuff[125] = pseudo_buffer_id++;
         shadowBuff[126] = spi_cpy_prt;
         shadowBuff[127] = spi_trans_ptr;
 
         temptr = spi_cpy_prt << 7;
         memcpy((void *) (measurements + temptr), (const void*) shadowBuff, 128);
+        LATBbits.LATB15 = 1; //Tell BBB that the data is ready
         spi_cpy_prt++;
         spi_cpy_prt = spi_cpy_prt & 0xF;
-        LATBbits.LATB15 = 1; //Tell BBB that the data is ready
+        
         shadowBuffPtr = 0; //wrap around
 
-
-        //while(bufferPtr<=126);
-        //LATBbits.LATB6=0;
         LATBbits.LATB15 = 0;
     }
 
@@ -182,16 +178,18 @@ void enter_sampling_state() {//start timer and do reduncent reset
     shadowBuffPtr = 0;
     temp_ptr = 0; //block * 128
     spi_trans_ptr = 0;
+    pseudo_buffer_id=0;
     bufferPtr = 0; //ptr inside a block
     measurementCount = 0;
     InitTimer(); //reinit timer clears timer
 }
 
 void clear_state() {
-    spi_cpy_prt = 0;
+    spi_cpy_prt = 0;//buffer copy pointer betwee 0-15
     shadowBuffPtr = 0;
     measurementCount = 0;
     temp_ptr = 0; //block * 128
     bufferPtr = 0; //ptr inside a block
-    spi_trans_ptr = 0;
+    spi_trans_ptr = 0;//buffer transfer pointer betwee 0-15
+    pseudo_buffer_id=0;//unique buffer identifier between 0-255
 }

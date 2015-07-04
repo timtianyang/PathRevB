@@ -66,13 +66,13 @@ Program Memory  [Origin = 0x200, Length = 0x155ec]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x226           0x339  (825)
-.text                        0x426               0x2da           0x447  (1095)
-.dinit                       0x700                0x38            0x54  (84)
-.text                        0x738                0x32            0x4b  (75)
-.init.delay32                0x76a                0x1c            0x2a  (42)
-.text                        0x786                 0xe            0x15  (21)
+.text                        0x426               0x2e6           0x459  (1113)
+.dinit                       0x70c                0x38            0x54  (84)
+.text                        0x744                0x32            0x4b  (75)
+.init.delay32                0x776                0x1c            0x2a  (42)
+.text                        0x792                 0xe            0x15  (21)
 
-                     Total program memory used (bytes):          0x85e  (2142) 1%
+                     Total program memory used (bytes):          0x870  (2160) 1%
 
 
 Data Memory  [Origin = 0x1000, Length = 0x4000]
@@ -111,7 +111,7 @@ External Symbols in Data Memory (by address):
                     0x1898                  _encLeft
                     0x189c                  _shadowBuffPtr
                     0x189e                  _measurementCount
-                    0x189f                  _a
+                    0x189f                  _pseudo_buffer_id
                     0x18be                  _DEVICE_INFO
                     0x18c0                  _laserBuff
                     0x18c4                  _IMUBuff
@@ -120,7 +120,6 @@ External Symbols in Data Memory (by name):
 
                     0x18be                  _DEVICE_INFO
                     0x18c4                  _IMUBuff
-                    0x189f                  _a
                     0x180c                  _bufferPtr
                     0x1002                  _device_info_ptr
                     0x1898                  _encLeft
@@ -128,6 +127,7 @@ External Symbols in Data Memory (by name):
                     0x18c0                  _laserBuff
                     0x189e                  _measurementCount
                     0x1008                  _measurements
+                    0x189f                  _pseudo_buffer_id
                     0x1000                  _samplingFlag
                     0x180e                  _shadowBuff
                     0x189c                  _shadowBuffPtr
@@ -156,26 +156,26 @@ External Symbols in Program Memory (by address):
                   0x000414                  _memcpy
                   0x000426                  _InitApp
                   0x000434                  _InitIO
-                  0x000454                  _MapPins
-                  0x000480                  _InitTimer
-                  0x0004ae                  _InitSPI1
-                  0x0004d8                  _SampleOnce
-                  0x0004fe                  _loadShadowBuff
-                  0x0006a4                  _enter_sampling_state
-                  0x0006dc                  _clear_state
-                  0x000738                  _main
-                  0x00076a                  ___delay32
-                  0x000786                  _ConfigureOscillator
+                  0x000452                  _MapPins
+                  0x00047e                  _InitTimer
+                  0x0004ac                  _InitSPI1
+                  0x0004d6                  _SampleOnce
+                  0x0004fc                  _loadShadowBuff
+                  0x0006a2                  _enter_sampling_state
+                  0x0006e2                  _clear_state
+                  0x000744                  _main
+                  0x000776                  ___delay32
+                  0x000792                  _ConfigureOscillator
 
 External Symbols in Program Memory (by name):
 
-                  0x000786                  _ConfigureOscillator
+                  0x000792                  _ConfigureOscillator
                   0x000426                  _InitApp
                   0x000434                  _InitIO
-                  0x0004ae                  _InitSPI1
-                  0x000480                  _InitTimer
-                  0x000454                  _MapPins
-                  0x0004d8                  _SampleOnce
+                  0x0004ac                  _InitSPI1
+                  0x00047e                  _InitTimer
+                  0x000452                  _MapPins
+                  0x0004d6                  _SampleOnce
                   0x0003e8                  __AddressError
                   0x000400                  __DMACError
                   0x000408                  __DefaultInterrupt
@@ -186,15 +186,15 @@ External Symbols in Program Memory (by name):
                   0x000410                  __SoftTrapError
                   0x0003f0                  __StackError
                   0x0002d2                  __T1Interrupt
-                  0x00076a                  ___delay32
+                  0x000776                  ___delay32
                   0x000238                  __data_init
                   0x000238                  __data_init_extended
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0006dc                  _clear_state
-                  0x0006a4                  _enter_sampling_state
-                  0x0004fe                  _loadShadowBuff
-                  0x000738                  _main
+                  0x0006e2                  _clear_state
+                  0x0006a2                  _enter_sampling_state
+                  0x0004fc                  _loadShadowBuff
+                  0x000744                  _main
                   0x000414                  _memcpy
 
 Memory Configuration
@@ -317,14 +317,14 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x21ec
+.debug_info       0x000000       0x21f0
  *(.debug_info)
  .debug_info      0x000000         0x92 build/C30_dsPIC33FJ256GP710A/production/configuration_bits.o
  .debug_info      0x000092        0x633 build/C30_dsPIC33FJ256GP710A/production/interrupts.o
  .debug_info      0x0006c5        0x2cb build/C30_dsPIC33FJ256GP710A/production/main.o
  .debug_info      0x000990        0x165 build/C30_dsPIC33FJ256GP710A/production/system.o
  .debug_info      0x000af5        0x36f build/C30_dsPIC33FJ256GP710A/production/traps.o
- .debug_info      0x000e64       0x1388 build/C30_dsPIC33FJ256GP710A/production/user.o
+ .debug_info      0x000e64       0x138c build/C30_dsPIC33FJ256GP710A/production/user.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x44d
@@ -336,14 +336,14 @@ __FUID3
  .debug_abbrev    0x000255         0x7d build/C30_dsPIC33FJ256GP710A/production/traps.o
  .debug_abbrev    0x0002d2        0x17b build/C30_dsPIC33FJ256GP710A/production/user.o
 
-.debug_line       0x000000        0x9ed
+.debug_line       0x000000        0x9f5
  *(.debug_line)
  .debug_line      0x000000         0x24 build/C30_dsPIC33FJ256GP710A/production/configuration_bits.o
  .debug_line      0x000024        0x1c2 build/C30_dsPIC33FJ256GP710A/production/interrupts.o
  .debug_line      0x0001e6        0x177 build/C30_dsPIC33FJ256GP710A/production/main.o
  .debug_line      0x00035d         0xba build/C30_dsPIC33FJ256GP710A/production/system.o
  .debug_line      0x000417        0x187 build/C30_dsPIC33FJ256GP710A/production/traps.o
- .debug_line      0x00059e        0x44f build/C30_dsPIC33FJ256GP710A/production/user.o
+ .debug_line      0x00059e        0x457 build/C30_dsPIC33FJ256GP710A/production/user.o
 
 .debug_frame      0x000000        0x1b4
  *(.debug_frame)
@@ -353,12 +353,12 @@ __FUID3
  .debug_frame     0x00007c         0x94 build/C30_dsPIC33FJ256GP710A/production/traps.o
  .debug_frame     0x000110         0xa4 build/C30_dsPIC33FJ256GP710A/production/user.o
 
-.debug_str        0x000000        0x16a
+.debug_str        0x000000        0x17b
  *(.debug_str)
  .debug_str       0x000000         0x6d build/C30_dsPIC33FJ256GP710A/production/interrupts.o
  .debug_str       0x00006d         0x16 build/C30_dsPIC33FJ256GP710A/production/main.o
  .debug_str       0x000083          0xc build/C30_dsPIC33FJ256GP710A/production/traps.o
- .debug_str       0x00008f         0xdb build/C30_dsPIC33FJ256GP710A/production/user.o
+ .debug_str       0x00008f         0xec build/C30_dsPIC33FJ256GP710A/production/user.o
 
 .debug_loc
  *(.debug_loc)
@@ -367,7 +367,7 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x2bd
+                  0x000000        0x2cc
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0xcc build/C30_dsPIC33FJ256GP710A/production/interrupts.o
@@ -378,7 +378,7 @@ __FUID3
  .debug_pubnames
                   0x000111         0xa2 build/C30_dsPIC33FJ256GP710A/production/traps.o
  .debug_pubnames
-                  0x0001b3        0x10a build/C30_dsPIC33FJ256GP710A/production/user.o
+                  0x0001b3        0x119 build/C30_dsPIC33FJ256GP710A/production/user.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1707,7 +1707,7 @@ __c30_signature
                     0x1898                  _encLeft
                     0x189c                  _shadowBuffPtr
                     0x189e                  _measurementCount
-                    0x189f                  _a
+                    0x189f                  _pseudo_buffer_id
 
 .ndata              0x18a0         0x36
  .ndata             0x18a0         0x36 build/C30_dsPIC33FJ256GP710A/production/interrupts.o
@@ -1736,29 +1736,29 @@ __c30_signature
  .config_JTAGEN
                   0x0157f0          0x2 build/C30_dsPIC33FJ256GP710A/production/configuration_bits.o
 
-.text             0x000426        0x2da
- .text            0x000426        0x2da build/C30_dsPIC33FJ256GP710A/production/user.o
+.text             0x000426        0x2e6
+ .text            0x000426        0x2e6 build/C30_dsPIC33FJ256GP710A/production/user.o
                   0x000426                  _InitApp
                   0x000434                  _InitIO
-                  0x000454                  _MapPins
-                  0x000480                  _InitTimer
-                  0x0004ae                  _InitSPI1
-                  0x0004d8                  _SampleOnce
-                  0x0004fe                  _loadShadowBuff
-                  0x0006a4                  _enter_sampling_state
-                  0x0006dc                  _clear_state
+                  0x000452                  _MapPins
+                  0x00047e                  _InitTimer
+                  0x0004ac                  _InitSPI1
+                  0x0004d6                  _SampleOnce
+                  0x0004fc                  _loadShadowBuff
+                  0x0006a2                  _enter_sampling_state
+                  0x0006e2                  _clear_state
 
-.dinit            0x000700         0x38
- .dinit           0x000700         0x38 data_init
+.dinit            0x00070c         0x38
+ .dinit           0x00070c         0x38 data_init
 
-.text             0x000738         0x32
- .text            0x000738         0x32 build/C30_dsPIC33FJ256GP710A/production/main.o
-                  0x000738                  _main
+.text             0x000744         0x32
+ .text            0x000744         0x32 build/C30_dsPIC33FJ256GP710A/production/main.o
+                  0x000744                  _main
 
-.init.delay32     0x00076a         0x1c
- .init.delay32    0x00076a         0x1c d:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(delay32ep.eo)
-                  0x00076a                  ___delay32
+.init.delay32     0x000776         0x1c
+ .init.delay32    0x000776         0x1c d:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(delay32ep.eo)
+                  0x000776                  ___delay32
 
-.text             0x000786          0xe
- .text            0x000786          0xe build/C30_dsPIC33FJ256GP710A/production/system.o
-                  0x000786                  _ConfigureOscillator
+.text             0x000792          0xe
+ .text            0x000792          0xe build/C30_dsPIC33FJ256GP710A/production/system.o
+                  0x000792                  _ConfigureOscillator

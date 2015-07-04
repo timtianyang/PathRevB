@@ -100,7 +100,7 @@ volatile unsigned int samplingFlag=0;
 
 
 
-const char* DEVICE_INFO="Hello, this is PathMeT RevB\0";
+const char* DEVICE_INFO="Hello, this is PathMeT RevB\0";//do not change this. BBB uses this to test communication.
 
 volatile unsigned int device_info_ptr=0;
 
@@ -139,11 +139,10 @@ void __attribute__((__interrupt__, no_auto_psv)) _SPI1Interrupt(void) {
             break;
         case 0xBC://master prepares reading the main buffer
             bufferPtr = 0; //reset bufferPtr
-            temp_ptr=spi_trans_ptr<<7;
-         
+            temp_ptr=spi_trans_ptr<<7;         
             spi_trans_ptr=(spi_trans_ptr+1)&0xF;//wrap around
             SPI1BUF = measurements[bufferPtr+temp_ptr];
-           bufferPtr++;
+            bufferPtr++;
             break;
         case 0xAE:
             SPI1BUF=*(DEVICE_INFO+(device_info_ptr++));
